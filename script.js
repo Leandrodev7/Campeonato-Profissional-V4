@@ -1054,6 +1054,30 @@ function delJogador(id) {
   save();
 }
 
+function excluirTemporadaHistorico(i) {
+  if (nuvemAtiva && !ehAdmin) {
+    return alert("Somente o administrador pode excluir.");
+  }
+
+  const h = data.historico[i];
+
+  if (!h) return;
+
+  if (
+    !confirm(
+      `Excluir a temporada ${h.temporada} do histórico?\n\nUm backup será baixado antes.`,
+    )
+  ) {
+    return;
+  }
+
+  baixarBackupAutomatico("antes_de_excluir_temporada");
+
+  data.historico.splice(i, 1);
+
+  save();
+}
+
 function obterCampeaoMataMata(fase) {
   if (!fase || fase.tipo !== "MATA_MATA") {
     return null;
@@ -1178,16 +1202,7 @@ function encerrarTemporada() {
 
   data.temporadaAtual = nova || (Number(data.temporadaAtual) + 1).toString();
 
-  data.times.forEach((t) => {
-    t.pts = 0;
-    t.j = 0;
-    t.v = 0;
-    t.e = 0;
-    t.d = 0;
-    t.gp = 0;
-    t.gc = 0;
-    t.sg = 0;
-  });
+  data.times = [];
 
   data.campeonato.fases = [];
   data.campeonato.faseAtualIndex = 0;
@@ -1537,7 +1552,8 @@ function render() {
 
   if (elGols) elGols.textContent = gols;
 
-  if (elLider) elLider.textContent = tabela[0]?.nome || "—";
+  if (elLider)
+    elLider.textContent = realizados > 0 && tabela[0] ? tabela[0].nome : "-";
 
   if (elArt) {
     elArt.textContent = artilheiros[0]
@@ -1552,7 +1568,7 @@ function render() {
       .map(
         (t, i) => `
           <div class="time-card" onclick="abrirPerfil('${t.id}')">
-            <div class="pos">${i + 1}º</div>
+            <div class="pos">${realizados > 0 ? i + 1 + "º" : "-"}</div>
 
             <div class="nome">${t.nome}</div>
 
@@ -1654,6 +1670,14 @@ function render() {
                     ? `<br><button onclick="verTemporadaArquivada(${i})">Ver classificação e jogos</button>`
                     : `<br><small style="color:#8b949e">Só o resumo foi guardado (encerrada antes do arquivo completo).</small>`
                 }
+                <br>
+                <button
+                  class="del"
+                  style="margin-top:8px"
+                  onclick="excluirTemporadaHistorico(${i})"
+                >
+                  Excluir temporada
+                </button>
               </div>
             `,
           )
