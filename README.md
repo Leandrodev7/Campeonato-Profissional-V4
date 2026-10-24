@@ -4,7 +4,7 @@ Sistema web para organizar e acompanhar campeonatos de futebol.
 
 Acessar o projeto
 
-- Aplicação publicada: https://campeonatoprofissional.netlify.app/
+- Aplicação publicada: https://campeonato-profissional-v4.leandromassuquetto.workers.dev/
 - Repositório no GitHub: https://github.com/Leandrodev7/Campeonato-Profissional-V4
 
 Funcionalidades
