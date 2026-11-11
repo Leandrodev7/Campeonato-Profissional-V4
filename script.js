@@ -158,7 +158,11 @@ function mostrarAba(e, id) {
 
   document
     .querySelectorAll(".tab-btn")
-    .forEach((x) => x.classList.remove("active"));
+    .forEach((x) => {
+      x.classList.remove("active");
+      const selected = x.dataset.tabTarget === id;
+      x.setAttribute("aria-selected", String(selected));
+    });
 
   const el = document.getElementById(id);
   if (el) el.classList.add("active");
@@ -166,8 +170,64 @@ function mostrarAba(e, id) {
   if (e) {
     const botao = e.currentTarget || e.target?.closest?.(".tab-btn");
 
-    if (botao) botao.classList.add("active");
+    if (botao) {
+      botao.classList.add("active");
+      botao.setAttribute("aria-selected", "true");
+    }
   }
+}
+
+function inicializarAcoesHTML() {
+  const tabs = document.querySelectorAll("[data-tab-target]");
+
+  tabs.forEach((botao) => {
+    botao.removeEventListener("click", botao.__clickTabHandler);
+
+    const handler = (event) => {
+      const alvo = botao.dataset.tabTarget;
+      if (!alvo) return;
+      mostrarAba(event, alvo);
+    };
+
+    botao.__clickTabHandler = handler;
+    botao.addEventListener("click", handler);
+  });
+
+  const botoesAcao = document.querySelectorAll("[data-action]");
+
+  botoesAcao.forEach((botao) => {
+    botao.removeEventListener("click", botao.__clickActionHandler);
+
+    const handler = () => {
+      const acao = botao.dataset.action;
+
+      if (!acao) return;
+
+      if (acao === "add-team") return addTeam();
+      if (acao === "add-jogador") return addJogador();
+      if (acao === "gerar-campeonato") return gerarCampeonatoCompleto();
+      if (acao === "encerrar-temporada") return encerrarTemporada();
+      if (acao === "novo-campeonato") return comecarNovo();
+      if (acao === "exportar-dados") return exportarDados();
+      if (acao === "importar-dados") return importarDados();
+    };
+
+    botao.__clickActionHandler = handler;
+    botao.addEventListener("click", handler);
+  });
+
+  const formato = document.getElementById("formatoCampeonato");
+
+  if (formato && !formato.dataset.boundChangeHandler) {
+    formato.addEventListener("change", alternarVisibilidadeFormatos);
+    formato.dataset.boundChangeHandler = "true";
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", inicializarAcoesHTML);
+} else {
+  inicializarAcoesHTML();
 }
 
 function alternarVisibilidadeFormatos() {

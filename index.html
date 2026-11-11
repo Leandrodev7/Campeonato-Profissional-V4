@@ -1,51 +1,91 @@
 <!doctype html>
-
 <html lang="pt-BR">
   <head>
-    <meta
-      name="google-site-verification"
-      content="9KKn1xg171yxIhu-cbGI0PEzf_JzWLfIKxdCF5sL-kc"
-    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Campeonato Profissional | Gestão de campeonatos de futebol</title>
+
+    <!-- Verificação e indexação -->
+    <meta
+      name="google-site-verification"
+      content="TGsjyDRWBZBhSeW3Xfx05qmMKR8Yno3z0uFAJL3Du80"
+    />
+    <meta name="robots" content="index, follow" />
+
+    <!-- SEO principal -->
+    <title>
+      Campeonato Profissional | Sistema de Gestão de Campeonatos de Futebol
+    </title>
+
     <meta
       name="description"
-      content="Sistema para organizar campeonatos de futebol: cadastre times, gere rodadas e chaves, acompanhe a classificação e a artilharia."
+      content="Conheça o Campeonato Profissional, um sistema online para organizar campeonatos de futebol. Cadastre equipes, gere rodadas e chaves, acompanhe classificações, resultados e artilharia."
     />
-    <link rel="canonical" href="https://campeonatoprofissional.netlify.app/" />
 
+    <meta name="author" content="Leandro Massuquetto" />
+    <meta name="theme-color" content="#101820" />
+
+    <link
+      rel="canonical"
+      href="https://campeonato-profissional-v4.leandromassuquetto.workers.dev/"
+    />
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Campeonato Profissional" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta
+      property="og:title"
+      content="Campeonato Profissional | Gestão Esportiva"
+    />
     <meta
       property="og:description"
-      content="Organize times, rodadas, classificação e artilharia do seu campeonato."
+      content="Organize campeonatos de futebol com cadastro de equipes, geração de rodadas, classificação, artilharia e histórico de temporadas."
     />
     <meta
       property="og:url"
-      content="https://campeonatoprofissional.netlify.app/"
+      content="https://campeonato-profissional-v4.leandromassuquetto.workers.dev/"
     />
+    <meta property="og:site_name" content="Campeonato Profissional" />
+
+    <!-- Dados estruturados -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Campeonato Profissional",
+        "applicationCategory": "SportsApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "pt-BR",
+        "description": "Sistema online para organização e gestão de campeonatos de futebol, com cadastro de equipes, geração de rodadas e chaves, classificação, artilharia e histórico de temporadas.",
+        "url": "https://campeonato-profissional-v4.leandromassuquetto.workers.dev/"
+      }
+    </script>
 
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <div class="app-shell">
-      <!-- =========================
-           CABEÇALHO PRINCIPAL
-      ========================== -->
+      <!-- CABEÇALHO PRINCIPAL -->
       <header class="site-header">
         <div class="brand-area">
           <div class="brand-icon">🏆</div>
+
           <div class="brand-text">
             <span class="brand-kicker">GESTÃO ESPORTIVA</span>
+
             <h1>Campeonato Profissional</h1>
-            <p>Organize, acompanhe e gerencie sua competição.</p>
+
+            <p>
+              Organização, acompanhamento e gestão de competições de futebol.
+            </p>
           </div>
         </div>
 
         <div class="season-panel">
           <span class="season-label">TEMPORADA</span>
+
           <strong id="headerTemporada">2026</strong>
+
           <span class="status-active">
             <span class="status-dot"></span>
             Sistema ativo
@@ -53,78 +93,128 @@
         </div>
       </header>
 
-      <!-- =========================
-           NAVEGAÇÃO
-      ========================== -->
-      <nav class="main-navigation">
+      <!-- NAVEGAÇÃO -->
+      <nav class="main-navigation" aria-label="Navegação principal">
         <div class="nav-title">
           <span>MENU</span>
         </div>
 
-        <div class="tabs">
+        <div class="tabs" role="tablist" aria-label="Navegação principal">
           <button
+            type="button"
             class="tab-btn active"
-            onclick="mostrarAba(event, 'dashboard')"
+            data-tab-target="dashboard"
+            role="tab"
+            aria-selected="true"
+            aria-controls="dashboard"
           >
-            <span class="nav-icon">⌂</span>
+            <span class="nav-icon" aria-hidden="true">⌂</span>
             Dashboard
           </button>
 
-          <button class="tab-btn" onclick="mostrarAba(event, 'times')">
-            <span class="nav-icon">⚽</span>
+          <button
+            type="button"
+            class="tab-btn"
+            data-tab-target="times"
+            role="tab"
+            aria-selected="false"
+            aria-controls="times"
+          >
+            <span class="nav-icon" aria-hidden="true">⚽</span>
             Times
           </button>
 
-          <button class="tab-btn" onclick="mostrarAba(event, 'tabela')">
-            <span class="nav-icon">📊</span>
+          <button
+            type="button"
+            class="tab-btn"
+            data-tab-target="tabela"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tabela"
+          >
+            <span class="nav-icon" aria-hidden="true">📊</span>
             Classificação
           </button>
 
-          <button class="tab-btn" onclick="mostrarAba(event, 'rodadas')">
-            <span class="nav-icon">📅</span>
+          <button
+            type="button"
+            class="tab-btn"
+            data-tab-target="rodadas"
+            role="tab"
+            aria-selected="false"
+            aria-controls="rodadas"
+          >
+            <span class="nav-icon" aria-hidden="true">📅</span>
             Rodadas & Chaves
           </button>
 
-          <button class="tab-btn" onclick="mostrarAba(event, 'artilheiros')">
-            <span class="nav-icon">👟</span>
+          <button
+            type="button"
+            class="tab-btn"
+            data-tab-target="artilheiros"
+            role="tab"
+            aria-selected="false"
+            aria-controls="artilheiros"
+          >
+            <span class="nav-icon" aria-hidden="true">👟</span>
             Artilheiros
           </button>
 
-          <button class="tab-btn" onclick="mostrarAba(event, 'temporadas')">
-            <span class="nav-icon">🏆</span>
+          <button
+            type="button"
+            class="tab-btn"
+            data-tab-target="temporadas"
+            role="tab"
+            aria-selected="false"
+            aria-controls="temporadas"
+          >
+            <span class="nav-icon" aria-hidden="true">🏆</span>
             Temporadas
           </button>
 
-          <button class="tab-btn" onclick="mostrarAba(event, 'backup')">
-            <span class="nav-icon">💾</span>
+          <button
+            type="button"
+            class="tab-btn"
+            data-tab-target="backup"
+            role="tab"
+            aria-selected="false"
+            aria-controls="backup"
+          >
+            <span class="nav-icon" aria-hidden="true">💾</span>
             Backup
           </button>
 
-          <button class="tab-btn" onclick="mostrarAba(event, 'contato')">
-            <span class="nav-icon">📞</span>
+          <button
+            type="button"
+            class="tab-btn"
+            data-tab-target="contato"
+            role="tab"
+            aria-selected="false"
+            aria-controls="contato"
+          >
+            <span class="nav-icon" aria-hidden="true">📞</span>
             Contato
           </button>
         </div>
       </nav>
 
       <main class="main-content">
-        <!-- =========================
-             DASHBOARD
-        ========================== -->
+        <!-- DASHBOARD -->
         <div id="dashboard" class="tab-content active">
           <section class="dashboard-hero">
             <div class="hero-copy">
-              <span class="section-eyebrow"> PAINEL PRINCIPAL </span>
+              <span class="section-eyebrow">GESTÃO DE CAMPEONATOS</span>
 
               <h2>
-                Tudo sobre o seu
-                <span>campeonato</span>
-                em um só lugar.
+                Seu campeonato,
+                <span>organizado em um só lugar.</span>
               </h2>
 
               <p>
-                Acompanhe equipes, partidas, classificação, artilharia e
-                histórico da competição.
+                O Campeonato Profissional é um sistema online desenvolvido para
+                facilitar a organização e o acompanhamento de competições de
+                futebol. Gerencie equipes, partidas, classificação, artilharia e
+                histórico das temporadas em um único ambiente.
               </p>
             </div>
 
@@ -133,20 +223,41 @@
             </div>
           </section>
 
+          <!-- APRESENTAÇÃO DO SISTEMA -->
           <section class="dashboard-section">
             <div class="section-heading">
               <div>
-                <span class="section-eyebrow"> RESUMO DA COMPETIÇÃO </span>
+                <span class="section-eyebrow">RECURSOS DO SISTEMA</span>
+
+                <h2>Gestão completa da competição</h2>
+              </div>
+            </div>
+
+            <p>
+              Organize seu campeonato de futebol desde o cadastro das equipes
+              até o acompanhamento dos resultados. O sistema reúne ferramentas
+              para estruturar diferentes formatos de competição, acompanhar o
+              desempenho dos participantes e consultar as informações
+              registradas durante cada temporada.
+            </p>
+          </section>
+
+          <!-- RESUMO DA COMPETIÇÃO -->
+          <section class="dashboard-section">
+            <div class="section-heading">
+              <div>
+                <span class="section-eyebrow">RESUMO DA COMPETIÇÃO</span>
 
                 <h2>Painel do Campeonato</h2>
               </div>
 
-              <span class="live-badge"> ● ATUALIZADO </span>
+              <span class="live-badge">● ATUALIZADO</span>
             </div>
 
             <div class="dashboard-grid">
               <div class="stat-card stat-featured">
                 <div class="stat-icon">👥</div>
+
                 <div class="stat-info">
                   <span class="stat-lab">Times</span>
                   <strong class="stat-val" id="s-times">0</strong>
@@ -155,6 +266,7 @@
 
               <div class="stat-card">
                 <div class="stat-icon">📅</div>
+
                 <div class="stat-info">
                   <span class="stat-lab">Jogos</span>
                   <strong class="stat-val" id="s-jogos">0</strong>
@@ -163,6 +275,7 @@
 
               <div class="stat-card">
                 <div class="stat-icon">✅</div>
+
                 <div class="stat-info">
                   <span class="stat-lab">Realizados</span>
                   <strong class="stat-val" id="s-real">0</strong>
@@ -171,6 +284,7 @@
 
               <div class="stat-card">
                 <div class="stat-icon">🥅</div>
+
                 <div class="stat-info">
                   <span class="stat-lab">Gols</span>
                   <strong class="stat-val" id="s-gols">0</strong>
@@ -179,6 +293,7 @@
 
               <div class="stat-card stat-highlight">
                 <div class="stat-icon">👑</div>
+
                 <div class="stat-info">
                   <span class="stat-lab">Líder / Atual</span>
                   <strong class="stat-val" id="s-lider">—</strong>
@@ -187,6 +302,7 @@
 
               <div class="stat-card">
                 <div class="stat-icon">👟</div>
+
                 <div class="stat-info">
                   <span class="stat-lab">Artilheiro</span>
                   <strong class="stat-val" id="s-artilheiro">—</strong>
@@ -194,17 +310,97 @@
               </div>
             </div>
           </section>
+
+          <!-- RECURSOS -->
+          <section class="dashboard-section">
+            <div class="section-heading">
+              <div>
+                <span class="section-eyebrow">FERRAMENTAS</span>
+
+                <h2>Recursos disponíveis</h2>
+              </div>
+            </div>
+
+            <div class="content-grid">
+              <section class="card">
+                <div class="card-heading">
+                  <div class="card-icon">⚽</div>
+
+                  <div>
+                    <span class="card-kicker">EQUIPES</span>
+                    <h2>Cadastro de times</h2>
+                  </div>
+                </div>
+
+                <p>
+                  Cadastre os times participantes e organize as equipes que
+                  fazem parte da competição.
+                </p>
+              </section>
+
+              <section class="card">
+                <div class="card-heading">
+                  <div class="card-icon">📊</div>
+
+                  <div>
+                    <span class="card-kicker">DESEMPENHO</span>
+                    <h2>Classificação</h2>
+                  </div>
+                </div>
+
+                <p>
+                  Acompanhe a posição das equipes e consulte os dados da
+                  classificação do campeonato.
+                </p>
+              </section>
+
+              <section class="card">
+                <div class="card-heading">
+                  <div class="card-icon">📅</div>
+
+                  <div>
+                    <span class="card-kicker">ORGANIZAÇÃO</span>
+                    <h2>Rodadas e chaves</h2>
+                  </div>
+                </div>
+
+                <p>
+                  Estruture competições em pontos corridos, mata-mata ou
+                  formatos mistos.
+                </p>
+              </section>
+
+              <section class="card">
+                <div class="card-heading">
+                  <div class="card-icon">👟</div>
+
+                  <div>
+                    <span class="card-kicker">ESTATÍSTICAS</span>
+                    <h2>Artilharia</h2>
+                  </div>
+                </div>
+
+                <p>
+                  Registre jogadores e acompanhe a quantidade de gols de cada
+                  participante.
+                </p>
+              </section>
+            </div>
+          </section>
         </div>
 
-        <!-- =========================
-             TIMES
-        ========================== -->
+        <!-- TIMES -->
         <div id="times" class="tab-content">
           <section class="page-heading">
             <div>
               <span class="section-eyebrow">EQUIPES</span>
+
               <h2>Times do Campeonato</h2>
-              <p>Cadastre e acompanhe os clubes participantes.</p>
+
+              <p>
+                Cadastre, organize e acompanhe os clubes participantes da
+                competição.
+              </p>
             </div>
           </section>
 
@@ -219,21 +415,27 @@
                 </div>
               </div>
 
-              <input id="teamName" placeholder="Nome do time" />
+              <label for="teamName" class="sr-only">Nome do time</label>
+              <input id="teamName" name="teamName" placeholder="Nome do time" />
 
-              <input id="teamCidade" placeholder="Cidade (opcional)" />
+              <label for="teamCidade" class="sr-only">Cidade do time</label>
+              <input
+                id="teamCidade"
+                name="teamCidade"
+                placeholder="Cidade (opcional)"
+              />
 
-              <button onclick="addTeam()">+ Adicionar Time</button>
+              <button type="button" data-action="add-team">+ Adicionar Time</button>
             </section>
 
             <section class="card teams-card">
               <div class="card-heading">
                 <div>
                   <span class="card-kicker">COMPETIÇÃO</span>
-                  <h2>Times</h2>
+                  <h2>Times participantes</h2>
                 </div>
 
-                <span class="count-badge"> Participantes </span>
+                <span class="count-badge">Participantes</span>
               </div>
 
               <div class="times-grid" id="timesGrid"></div>
@@ -241,12 +443,10 @@
           </div>
         </div>
 
-        <!-- =========================
-             PERFIL DO TIME
-        ========================== -->
+        <!-- PERFIL DO TIME -->
         <div id="perfilTime" class="tab-content">
           <section class="card profile-card">
-            <button class="link" onclick="mostrarAba(event, 'times')">
+            <button type="button" class="link" data-tab-target="times">
               ← Voltar aos Times
             </button>
 
@@ -254,17 +454,18 @@
           </section>
         </div>
 
-        <!-- =========================
-             CLASSIFICAÇÃO
-        ========================== -->
+        <!-- CLASSIFICAÇÃO -->
         <div id="tabela" class="tab-content">
           <section class="page-heading">
             <div>
-              <span class="section-eyebrow"> TABELA </span>
+              <span class="section-eyebrow">TABELA</span>
 
-              <h2>Classificação</h2>
+              <h2>Classificação do Campeonato</h2>
 
-              <p>Acompanhe a situação das equipes na competição.</p>
+              <p>
+                Consulte a posição e o desempenho das equipes durante a
+                competição.
+              </p>
             </div>
 
             <div class="table-badge">📊 Ranking</div>
@@ -273,28 +474,29 @@
           <div id="conteudoTabelas"></div>
         </div>
 
-        <!-- =========================
-             RODADAS E CHAVES
-        ========================== -->
+        <!-- RODADAS E CHAVES -->
         <div id="rodadas" class="tab-content">
           <section class="page-heading">
             <div>
-              <span class="section-eyebrow"> COMPETIÇÃO </span>
+              <span class="section-eyebrow">COMPETIÇÃO</span>
 
-              <h2>Rodadas & Chaves</h2>
+              <h2>Rodadas e Chaves</h2>
 
-              <p>Configure e acompanhe o calendário do campeonato.</p>
+              <p>
+                Configure o formato, organize os confrontos e acompanhe o
+                calendário da competição.
+              </p>
             </div>
           </section>
 
           <section class="card calendar-card">
             <div class="calendar-header">
               <div>
-                <span class="card-kicker"> CALENDÁRIO </span>
+                <span class="card-kicker">CALENDÁRIO</span>
 
                 <h2>
                   Temporada:
-                  <span id="nomeTemporadaAtual"> 2026 </span>
+                  <span id="nomeTemporadaAtual">2026</span>
                 </h2>
               </div>
 
@@ -303,12 +505,9 @@
 
             <div class="config-box">
               <div class="config-item">
-                <label> Formato do Campeonato </label>
+                <label>Formato do Campeonato</label>
 
-                <select
-                  id="formatoCampeonato"
-                  onchange="alternarVisibilidadeFormatos()"
-                >
+                <select id="formatoCampeonato">
                   <option value="PONTOS_CORRIDOS">
                     Pontos Corridos (ex: Brasileirão)
                   </option>
@@ -324,26 +523,25 @@
               </div>
 
               <div id="boxTurnos" class="config-item">
-                <label> Turnos (Pontos Corridos) </label>
+                <label>Turnos (Pontos Corridos)</label>
 
                 <select id="opcaoTurnos">
                   <option value="2">Ida e Volta</option>
-
                   <option value="1">Turno Único</option>
                 </select>
               </div>
             </div>
 
             <div class="action-bar">
-              <button onclick="gerarCampeonatoCompleto()">
+              <button type="button" data-action="gerar-campeonato">
                 🚀 Iniciar Torneio
               </button>
 
-              <button class="gold" onclick="encerrarTemporada()">
+              <button type="button" class="gold" data-action="encerrar-temporada">
                 🏁 Encerrar Temporada
               </button>
 
-              <button class="del" onclick="comecarNovo()">
+              <button type="button" class="del" data-action="novo-campeonato">
                 Novo Campeonato
               </button>
             </div>
@@ -352,17 +550,18 @@
           </section>
         </div>
 
-        <!-- =========================
-             ARTILHEIROS
-        ========================== -->
+        <!-- ARTILHEIROS -->
         <div id="artilheiros" class="tab-content">
           <section class="page-heading">
             <div>
-              <span class="section-eyebrow"> ESTATÍSTICAS </span>
+              <span class="section-eyebrow">ESTATÍSTICAS</span>
 
-              <h2>Artilharia</h2>
+              <h2>Artilharia do Campeonato</h2>
 
-              <p>Cadastre jogadores e acompanhe os goleadores.</p>
+              <p>
+                Cadastre jogadores e acompanhe o desempenho dos goleadores da
+                competição.
+              </p>
             </div>
 
             <div class="table-badge">👟 Goleadores</div>
@@ -374,14 +573,16 @@
                 <div class="card-icon">👟</div>
 
                 <div>
-                  <span class="card-kicker"> NOVO JOGADOR </span>
+                  <span class="card-kicker">NOVO JOGADOR</span>
 
                   <h2>Cadastrar Jogador</h2>
                 </div>
               </div>
 
+              <label for="jogadorNome" class="sr-only">Nome do jogador</label>
               <input id="jogadorNome" placeholder="Nome do jogador" />
 
+              <label for="jogadorGols" class="sr-only">Gols do jogador</label>
               <input
                 id="jogadorGols"
                 type="number"
@@ -389,17 +590,18 @@
                 placeholder="Gols"
               />
 
+              <label for="jogadorTime" class="sr-only">Time do jogador</label>
               <select id="jogadorTime">
                 <option value="">-- Time --</option>
               </select>
 
-              <button onclick="addJogador()">Salvar Jogador</button>
+              <button type="button" data-action="add-jogador">Salvar Jogador</button>
             </section>
 
             <section class="card">
               <div class="card-heading">
                 <div>
-                  <span class="card-kicker"> RANKING </span>
+                  <span class="card-kicker">RANKING</span>
 
                   <h2>Ranking de Artilharia</h2>
                 </div>
@@ -426,17 +628,18 @@
           </div>
         </div>
 
-        <!-- =========================
-             TEMPORADAS
-        ========================== -->
+        <!-- TEMPORADAS -->
         <div id="temporadas" class="tab-content">
           <section class="page-heading">
             <div>
-              <span class="section-eyebrow"> HISTÓRICO </span>
+              <span class="section-eyebrow">HISTÓRICO</span>
 
-              <h2>Temporadas</h2>
+              <h2>Histórico de Temporadas</h2>
 
-              <p>Consulte o histórico das competições encerradas.</p>
+              <p>
+                Organize e consulte as temporadas anteriores e a evolução das
+                competições.
+              </p>
             </div>
           </section>
 
@@ -445,7 +648,7 @@
               <div class="card-icon">🏆</div>
 
               <div>
-                <span class="card-kicker"> TEMPORADA ATUAL </span>
+                <span class="card-kicker">TEMPORADA ATUAL</span>
 
                 <h2>Histórico de Temporadas</h2>
               </div>
@@ -453,12 +656,13 @@
 
             <p class="season-current">
               Temporada atual:
-              <strong id="atualTemporada"> 2026 </strong>
+              <strong id="atualTemporada">2026</strong>
             </p>
 
+            <label for="novaTemporadaNome" class="sr-only">Próxima temporada</label>
             <input id="novaTemporadaNome" placeholder="Próxima (ex: 2027)" />
 
-            <button class="gold" onclick="encerrarTemporada()">
+            <button type="button" class="gold" data-action="encerrar-temporada">
               🏁 Encerrar e Salvar
             </button>
 
@@ -466,17 +670,18 @@
           </section>
         </div>
 
-        <!-- =========================
-             BACKUP
-        ========================== -->
+        <!-- BACKUP -->
         <div id="backup" class="tab-content">
           <section class="page-heading">
             <div>
-              <span class="section-eyebrow"> SEGURANÇA </span>
+              <span class="section-eyebrow">SEGURANÇA</span>
 
               <h2>Backup dos Dados</h2>
 
-              <p>Exporte ou importe os dados completos do campeonato.</p>
+              <p>
+                Proteja as informações da competição exportando ou importando
+                seus dados.
+              </p>
             </div>
           </section>
 
@@ -484,7 +689,7 @@
             <div class="backup-icon">💾</div>
 
             <div class="backup-content">
-              <span class="card-kicker"> PROTEÇÃO DOS DADOS </span>
+              <span class="card-kicker">PROTEÇÃO DOS DADOS</span>
 
               <h2>Backup do Campeonato</h2>
 
@@ -494,7 +699,7 @@
               </p>
 
               <div class="backup-actions">
-                <button class="blue" onclick="exportarDados()">
+                <button type="button" class="blue" data-action="exportar-dados">
                   💾 Exportar Backup
                 </button>
 
@@ -504,23 +709,26 @@
                   <input type="file" id="arquivoImportar" accept=".json" />
                 </label>
 
-                <button onclick="importarDados()">Importar Backup</button>
+                <button type="button" data-action="importar-dados">
+                  Importar Backup
+                </button>
               </div>
             </div>
           </section>
         </div>
 
-        <!-- =========================
-             CONTATO
-        ========================== -->
+        <!-- CONTATO -->
         <div id="contato" class="tab-content">
           <section class="page-heading">
             <div>
-              <span class="section-eyebrow"> CONTATO </span>
+              <span class="section-eyebrow">CONTATO</span>
 
-              <h2>Fale comigo</h2>
+              <h2>Conheça o projeto</h2>
 
-              <p>Conheça meus projetos e acompanhe meu trabalho.</p>
+              <p>
+                Acompanhe o desenvolvimento do Campeonato Profissional e conheça
+                outros projetos.
+              </p>
             </div>
           </section>
 
@@ -530,12 +738,15 @@
                 <div class="card-icon">📸</div>
 
                 <div>
-                  <span class="card-kicker"> REDES SOCIAIS </span>
+                  <span class="card-kicker">REDES SOCIAIS</span>
                   <h2>Instagram</h2>
                 </div>
               </div>
 
-              <p>Acompanhe meus projetos e conteúdos no Instagram.</p>
+              <p>
+                Acompanhe projetos, novidades e conteúdos publicados nas redes
+                sociais.
+              </p>
 
               <a
                 href="https://www.instagram.com/Leandromassuquetto9/"
@@ -552,40 +763,43 @@
                 <div class="card-icon">💻</div>
 
                 <div>
-                  <span class="card-kicker"> PROJETO </span>
-                  <h2>GitHub</h2>
+                  <span class="card-kicker">PROJETO ONLINE</span>
+                  <h2>Campeonato Profissional V4</h2>
                 </div>
               </div>
 
-              <p>Veja o projeto publicado e acompanhe sua evolução.</p>
+              <p>
+                Acesse a versão online do sistema de gestão de campeonatos de
+                futebol.
+              </p>
 
               <a
-                href="https://leandrodev7.github.io/Campeonato-Profissional-V3/"
+                href="https://campeonato-profissional-v4.leandromassuquetto.workers.dev/"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="link"
               >
-                💻 Acessar projeto
+                💻 Acessar Campeonato Profissional
               </a>
             </section>
           </div>
         </div>
       </main>
 
-      <!-- =========================
-           RODAPÉ
-      ========================== -->
+      <!-- RODAPÉ -->
       <footer class="site-footer">
         <div>
           <strong>🏆 Campeonato Profissional</strong>
           <span>V4</span>
         </div>
 
-        <p>Sistema de gestão esportiva</p>
+        <p>Sistema online de organização e gestão de campeonatos de futebol.</p>
       </footer>
     </div>
 
+    <!-- JavaScript principal -->
     <script src="script.js"></script>
+
     <!-- Cloudflare Web Analytics -->
     <script
       type="module"
