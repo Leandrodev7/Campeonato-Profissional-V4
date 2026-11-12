@@ -20,7 +20,10 @@
       name="description"
       content="Conheça o Campeonato Profissional, um sistema online para organizar campeonatos de futebol. Cadastre equipes, gere rodadas e chaves, acompanhe classificações, resultados e artilharia."
     />
-    <link rel="canonical" href="https://campeonatoprofissional.netlify.app/" />
+    <link
+      rel="canonical"
+      href="https://campeonato-profissional-v4.leandromassuquetto.workers.dev/"
+    />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -35,7 +38,7 @@
     />
     <meta
       property="og:url"
-      content="https://campeonatoprofissional.netlify.app/"
+      content="https://campeonato-profissional-v4.leandromassuquetto.workers.dev/"
     />
 
     <link rel="stylesheet" href="style.css" />
@@ -403,7 +406,9 @@
                 placeholder="Cidade (opcional)"
               />
 
-              <button type="button" data-action="add-team">+ Adicionar Time</button>
+              <button type="button" data-action="add-team">
+                + Adicionar Time
+              </button>
             </section>
 
             <section class="card teams-card">
@@ -515,7 +520,11 @@
                 🚀 Iniciar Torneio
               </button>
 
-              <button type="button" class="gold" data-action="encerrar-temporada">
+              <button
+                type="button"
+                class="gold"
+                data-action="encerrar-temporada"
+              >
                 🏁 Encerrar Temporada
               </button>
 
@@ -573,7 +582,9 @@
                 <option value="">-- Time --</option>
               </select>
 
-              <button type="button" data-action="add-jogador">Salvar Jogador</button>
+              <button type="button" data-action="add-jogador">
+                Salvar Jogador
+              </button>
             </section>
 
             <section class="card">
@@ -637,7 +648,9 @@
               <strong id="atualTemporada">2026</strong>
             </p>
 
-            <label for="novaTemporadaNome" class="sr-only">Próxima temporada</label>
+            <label for="novaTemporadaNome" class="sr-only"
+              >Próxima temporada</label
+            >
             <input id="novaTemporadaNome" placeholder="Próxima (ex: 2027)" />
 
             <button type="button" class="gold" data-action="encerrar-temporada">
