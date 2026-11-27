@@ -130,24 +130,39 @@ function torneioTemResultados() {
 }
 
 function baixarBackupAutomatico(motivo) {
+  let url;
+  let a;
+
   try {
     const carimbo = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
 
-    const a = document.createElement("a");
+    a = document.createElement("a");
 
-    a.href = URL.createObjectURL(
+    url = URL.createObjectURL(
       new Blob([JSON.stringify(data, null, 2)], {
         type: "application/json",
       }),
     );
 
+    a.href = url;
     a.download = `backup_automatico_${motivo}_${data.temporadaAtual}_${carimbo}.json`;
 
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    document.body.appendChild(a);
     a.click();
 
-    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+    return true;
   } catch (erro) {
     console.error("Não foi possível gerar o backup automático:", erro);
+    return false;
+  } finally {
+    if (a?.parentNode) {
+      try {
+        a.parentNode.removeChild(a);
+      } catch (erro) {
+        console.error("Não foi possível remover o link temporário do backup:", erro);
+      }
+    }
   }
 }
 
@@ -463,23 +478,31 @@ function abrirPerfil(timeId) {
 }
 
 function gerarCampeonatoCompleto() {
+  const fmt = document.getElementById("formatoCampeonato")?.value;
+
+  if (!["PONTOS_CORRIDOS", "MATA_MATA", "MISTO"].includes(fmt)) {
+    alert("Selecione um formato de campeonato válido.");
+    return;
+  }
+
   validarEstrutura();
 
   if (data.times.length < 2) {
     return alert("Cadastre pelo menos 2 times diferentes!");
   }
 
-  if (torneioTemResultados()) {
+  if (data.campeonato.fases.length > 0) {
     const ok = confirm(
-      "Já existe um torneio com resultados lançados. Iniciar um novo vai APAGAR os jogos atuais.\n\nUm backup será baixado automaticamente. Continuar?",
+      "Já existe um campeonato configurado. Iniciar outro vai substituir as fases e jogos atuais.\n\nUm backup será baixado automaticamente. Continuar?",
     );
 
     if (!ok) return;
 
-    baixarBackupAutomatico("antes_de_iniciar_torneio");
+    if (!baixarBackupAutomatico("antes_de_iniciar_torneio")) {
+      alert("Não foi possível iniciar o download do backup. O campeonato atual foi mantido.");
+      return;
+    }
   }
-
-  const fmt = document.getElementById("formatoCampeonato").value;
 
   data.campeonato.formato = fmt;
   data.campeonato.faseAtualIndex = 0;
@@ -1504,12 +1527,48 @@ async function importarDados() {
 }
 
 function comecarNovo() {
-  if (!confirm("Apagar todos os dados e começar do zero?")) {
-    return;
-  }
+  const campeonato = data?.campeonato || {};
+  const fases = Array.isArray(campeonato.fases) ? campeonato.fases : [];
+  const temDados =
+    (Array.isArray(data?.times) && data.times.length > 0) ||
+    (Array.isArray(data?.jogadores) && data.jogadores.length > 0) ||
+    (Array.isArray(data?.historico) && data.historico.length > 0) ||
+    fases.length > 0 ||
+    (data?.temporadaAtual && data.temporadaAtual !== "2026") ||
+    (campeonato.formato && campeonato.formato !== "PONTOS_CORRIDOS") ||
+    (campeonato.faseAtualIndex != null && campeonato.faseAtualIndex !== 0);
 
-  if (data.times.length || data.historico.length || torneioTemResultados()) {
-    baixarBackupAutomatico("antes_de_apagar_tudo");
+  if (temDados) {
+    if (
+      !confirm(
+        "Apagar os dados atuais do campeonato (times, jogadores, artilharia, " +
+          "fases, rodadas, etapas, jogos e histórico) e reiniciar a temporada? " +
+          "O estado vazio poderá ser sincronizado com o Supabase. Continuar?",
+      )
+    ) {
+      return;
+    }
+
+    let backupDisparado = false;
+
+    try {
+      backupDisparado = baixarBackupAutomatico("antes_de_apagar_tudo");
+    } catch (erro) {
+      console.error("Não foi possível iniciar o backup antes de apagar os dados:", erro);
+    }
+
+    if (!backupDisparado) {
+      alert("Não foi possível iniciar o download do backup. Os dados foram preservados.");
+      return;
+    }
+
+    if (
+      !confirm(
+        "O download do backup foi iniciado. Você verificou se o arquivo JSON apareceu na pasta Downloads? Somente confirme se encontrou o arquivo. Sem essa confirmação, os dados atuais serão preservados.",
+      )
+    ) {
+      return;
+    }
   }
 
   localStorage.removeItem(STORAGE_KEY);
